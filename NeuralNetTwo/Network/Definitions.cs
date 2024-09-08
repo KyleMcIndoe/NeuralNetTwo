@@ -75,6 +75,7 @@ public class network {
             layer curlayer = this.layers[i];
             layer nextlayer = this.layers[i + 1];
             curlayer.layermath();
+            for(int j = 0; j < curlayer.nodes.Length; j++) curlayer.nodes[j].val = 0; // reset node values to 0 for the next calculateOutput()
             curlayer.passToNextLayer(nextlayer);
         }
 
