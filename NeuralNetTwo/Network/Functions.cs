@@ -42,4 +42,18 @@ public static class funcs {
 
         return derivofnode;
     }
+
+    public static void train(network n, double[][] trainingDataInput, double[][] trainingDataOutput, double learnRate, int epochs) {
+        for(int curSet = 0; curSet < epochs && curSet < trainingDataInput.Length; curSet++) {
+            double[] trainingInput = trainingDataInput[curSet];
+            double[] trainingExpected = trainingDataOutput[curSet];
+
+            double[] networkOutput = n.calculateOutput(trainingInput); // forward propagation
+            double loss = meanSquaredError(trainingInput, trainingExpected, n);
+            
+            n.backPropogation(loss, learnRate); // backward propagation
+        }
+    }
 }
+
+
