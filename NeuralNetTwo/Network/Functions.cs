@@ -22,5 +22,4 @@ public static class funcs {
 
         return mse;
     }
-
 }

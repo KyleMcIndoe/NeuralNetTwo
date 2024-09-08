@@ -89,4 +89,8 @@ public class network {
 
         return output;
     }
+
+    public void backPropogation(double mse) {
+        
+    }
 }
