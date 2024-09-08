@@ -7,7 +7,8 @@
             double[] inp = {2.5, 1.6};
             double[] outp = n.calculateOutput(inp);
 
-            Console.WriteLine(outp);
+            Console.WriteLine(outp[0]);
+            Console.WriteLine(outp[1]);
         }
     }
 }
