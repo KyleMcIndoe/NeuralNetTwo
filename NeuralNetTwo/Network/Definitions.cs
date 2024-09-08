@@ -14,7 +14,25 @@ public class network {
 
     public class layer {
         node[] nodes;
+        int index; // index of layer in networks layers array
+        public layer(int size, int ind) {
+            this.nodes = new node[size];
+            this.index = ind;
+            for(int i = 0; i < size; i++) { // fill layer with node instances
+                this.nodes[i] = new node(i);
+            }
+        }
     }
 
     layer[] layers;
+
+    public network(int[] layersizes) {
+        this.layers = new layer[layersizes.Length];
+
+        for(int i = 0; i < layersizes.Length; i++) { // fill layer array with layers
+            this.layers[i] = new layer(layersizes[i], i);
+        }
+
+
+    }
 }
