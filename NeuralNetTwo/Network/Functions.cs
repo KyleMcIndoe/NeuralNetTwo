@@ -27,11 +27,19 @@ public static class funcs {
         return mse / trainingDataInputs.Length;
     }
 
-    public static double nudgeAmount(double[] derivs, double learnRate) {
-        double prod = derivs[0];
-        for(int i = 1; i < derivs.Length; i++) {
-            prod *= derivs[i];
+    public static double dCostdWeight(double derivOfNode, double sigmoidDeriv, double prevNodeVal) {
+        return derivOfNode * sigmoidDeriv * prevNodeVal;
+    }
+
+    public static double derivOfNode(network.node x) {
+
+        double sigmoidDeriv = sigmoidDerivative(x.val);
+        double derivofnode = 0;
+
+        for(int i = 0; i < x.weights.Count; i++) {
+            derivofnode += x.connections[i].costDeriv * sigmoidDeriv * x.weights[i];
         }
-        return prod * learnRate;
+
+        return derivofnode;
     }
 }

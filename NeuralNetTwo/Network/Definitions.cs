@@ -1,4 +1,5 @@
 using System.Diagnostics.Tracing;
+using System.Globalization;
 
 public class network {
     public class node {
@@ -6,7 +7,8 @@ public class network {
         public double bias;
         public int index; // nodes position in the layer
         public List<double> weights = new List<double>();
-
+        public List<node> connections = new List<node>(); // what the weights point to. used for backprop
+        public double costDeriv = 0; // derivative of cost with respect to the nodes output
         public node(int i) {
             this.val = 0;
             this.bias = funcs.rand.Next(0, 2);
@@ -43,7 +45,7 @@ public class network {
         }
     }
 
-    layer[] layers;
+    public layer[] layers;
 
     public network(int[] layersizes) {
         this.layers = new layer[layersizes.Length];
@@ -60,11 +62,11 @@ public class network {
 
                 for(int j = 0; j < layersizes[layernum + 1]; j++) {
                     curnode.weights.Add(funcs.rand.NextDouble()); // a random weight for every node in the next layer
+                    curnode.connections.Add(this.layers[layernum + 1].nodes[j]);
                 } 
             }
         } // 3 nested for loops is disgusting, I hate myself for coding this.
     }
-
     public double[] calculateOutput(double[] inputs) {
         for(int i = 0; i < this.layers[0].nodes.Length; i++) { // pass inputs into first layer
             node curnode = this.layers[0].nodes[i];
@@ -91,6 +93,23 @@ public class network {
     }
 
     public void backPropogation(double mse, double learnRate) {
-        
+        layer lastLayer = this.layers[layers.Length - 1]; // last layer
+        for(int i = 0; i < lastLayer.nodes.Length; i++) { // set derivs for last layer
+            node curnode = lastLayer.nodes[i];
+            curnode.costDeriv = mse / lastLayer.nodes.Length;
+        }
+
+        for(int i = this.layers.Length - 2; i >= 0; i++) { // loop through all the layers backward
+            layer curlayer = this.layers[i];
+            for(int numnode = 0; numnode < curlayer.nodes.Length; numnode++) { // visit every node
+                node curnode = curlayer.nodes[numnode];
+                curnode.costDeriv = funcs.derivOfNode(curnode);
+
+                for(int numw = 0; numw < curnode.weights.Count; numw++) { // go through every weight of said node
+                    double nudgeAmount = curnode.connections[numw].costDeriv * funcs.sigmoidDerivative(curnode.val) * curnode.val;
+                    curnode.weights[numw] = curnode.weights[numw] - (learnRate * nudgeAmount);
+                }
+            }
+        }
     }
 }
