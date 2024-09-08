@@ -54,6 +54,20 @@ public static class funcs {
             n.backPropogation(loss, learnRate); // backward propagation
         }
     }
+
+    public static int classify(double[] outputs) { // return the largest output
+        double max = 0;
+        int maxi = 0;
+
+        for(int i = 0; i < outputs.Length; i++) {
+            if(outputs[i] > max) {
+                max = outputs[i];
+                maxi = i;
+            }
+        }
+
+        return maxi;
+    }
 }
 
 
