@@ -8,7 +8,7 @@ public class network {
         public List<double> weights = new List<double>();
 
         public node(int i) {
-            this.val = funcs.sigmoid(funcs.rand.Next(-5, 5));
+            this.val = 0;
             this.bias = funcs.rand.Next(0, 2);
             this.index = i;
         }
@@ -25,10 +25,20 @@ public class network {
             }
         }
 
-        void layermath() { // take all the node values (currently the weighted sum of the previous layer) and add bias then pass through sigmoid
+        public void layermath() { // take all the node values (currently the weighted sum of the previous layer) and add bias then pass through sigmoid
             for(int i = 0; i < nodes.Length; i++) {
-                nodes[i].val += nodes[i].bias;
-                nodes[i].val = funcs.sigmoid(nodes[i].val);
+                this.nodes[i].val += nodes[i].bias;
+                this.nodes[i].val = funcs.sigmoid(nodes[i].val);
+            }
+        }
+
+        public void passToNextLayer(layer next) { // take current layers values after layermath(), pass them through weights to next layer
+            for(int i = 0; i < this.nodes.Length; i++) {
+                node curnode = this.nodes[i];
+
+                for(int j = 0; j < next.nodes.Length; j++) { // loop through all the nodes in the next layer
+                    next.nodes[j].val += curnode.val * curnode.weights[j]; // take current nodes value, apply it to next.nodes[j]
+                }
             }
         }
     }
@@ -53,5 +63,29 @@ public class network {
                 } 
             }
         } // 3 nested for loops is disgusting, I hate myself for coding this.
+    }
+
+    public double[] calculateOutput(double[] inputs) {
+        for(int i = 0; i < this.layers[0].nodes.Length; i++) { // pass inputs into first layer
+            node curnode = this.layers[0].nodes[i];
+            curnode.val = inputs[i];
+        }
+
+        for(int i = 0; i < this.layers.Length - 1; i++) { // loop through all layers, and call layermath() then passToNextLayer()
+            layer curlayer = this.layers[i];
+            layer nextlayer = this.layers[i + 1];
+            curlayer.layermath();
+            curlayer.passToNextLayer(nextlayer);
+        }
+
+        layer lastLayer = this.layers[this.layers.Length - 1];
+        lastLayer.layermath();
+
+        double[] output = new double[lastLayer.nodes.Length];
+        for(int i = 0; i < output.Length; i++) { // copy last layers node values into output array
+            output[i] = lastLayer.nodes[i].val;
+        }
+
+        return output;
     }
 }
