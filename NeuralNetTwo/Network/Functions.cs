@@ -11,6 +11,10 @@ public static class funcs {
         return 1/(1 + Math.Pow(constants.e, -1 * x));
     }
 
+    public static double sigmoidDerivative(double x) {
+        return sigmoid(x) * (1 - sigmoid(x));
+    }
+
     public static double meanSquaredError(double[] trainingDataInputs, double[] trainingDataAnswers, network n) {
         double mse = 0;
 
@@ -20,6 +24,14 @@ public static class funcs {
             mse += Math.Pow(trainingDataAnswers[i] - networkOutput[i], 2);
         }
 
-        return mse;
+        return mse / trainingDataInputs.Length;
+    }
+
+    public static double nudgeAmount(double[] derivs, double learnRate) {
+        double prod = derivs[0];
+        for(int i = 1; i < derivs.Length; i++) {
+            prod *= derivs[i];
+        }
+        return prod * learnRate;
     }
 }
