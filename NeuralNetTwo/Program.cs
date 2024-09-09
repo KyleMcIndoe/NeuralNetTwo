@@ -9,7 +9,12 @@
             int[] layersizes = {3, 4, 6};
             network n = new network(layersizes);
 
-            Console.WriteLine(trainingIns[0][0]);
+            for(int i = 0; i < trainingOuts.Length; i++) {
+                for(int j = 0; j < trainingOuts[i].Length; j++) {
+                    Console.Write(trainingOuts[i][j]);
+                }
+                Console.WriteLine(" ");
+            }
         }
     }
 }
