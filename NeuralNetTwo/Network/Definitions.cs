@@ -96,7 +96,7 @@ public class network {
         layer lastLayer = this.layers[layers.Length - 1]; // last layer
         for(int i = 0; i < lastLayer.nodes.Length; i++) { // set derivs for last layer
             node curnode = lastLayer.nodes[i];
-            curnode.costDeriv = mse / lastLayer.nodes.Length;
+            curnode.costDeriv = 1 / lastLayer.nodes.Length;
         }
 
         for(int i = this.layers.Length - 2; i >= 0; i++) { // loop through all the layers backward
@@ -109,6 +109,8 @@ public class network {
                     double nudgeAmount = curnode.connections[numw].costDeriv * funcs.sigmoidDerivative(curnode.val) * curnode.val;
                     curnode.weights[numw] = curnode.weights[numw] - (learnRate * nudgeAmount);
                 }
+
+                curnode.bias = curnode.bias - funcs.sigmoidDerivative(curnode.val) * curnode.costDeriv * learnRate;
             }
         }
     }

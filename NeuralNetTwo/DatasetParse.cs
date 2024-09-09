@@ -15,14 +15,20 @@ public class data {
 
     public data() {
         for(int i = 0; i < answersLines.Length; i++) {
+            
             answersLinesSplit[i] = answersLines[i].Split(" ");
             rgbsLinesSplit[i] = answersLines[i].Split(" ");
         }
 
-        for(int i = 0; i < answersLines.Length; i++) {
-            for(int j = 0; j < answersLinesSplit[i].Length; i++) {
-                answers[i][j] = int.Parse(answersLinesSplit[i][j]);
-                rgbs[i][j] = int.Parse(rgbsLinesSplit[i][j]);
+        for(int i = 0; i < answersLinesSplit.Length; i++) {
+            for(int j = 0; j < answersLinesSplit[i].Length; j++) {
+                answers[i][j] = Convert.ToInt32(answersLinesSplit[i][j]);
+            }
+        }
+
+        for(int i = 0; i < rgbsLinesSplit.Length; i++) {
+            for(int j = 0; j < rgbsLinesSplit[i].Length; j++) {
+                rgbs[i][j] = Convert.ToInt32(rgbsLinesSplit[i][j]);
             }
         }
     }
