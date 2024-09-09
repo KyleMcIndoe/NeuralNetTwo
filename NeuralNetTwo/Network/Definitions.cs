@@ -99,7 +99,7 @@ public class network {
             curnode.costDeriv = 1 / lastLayer.nodes.Length;
         }
 
-        for(int i = this.layers.Length - 2; i >= 0; i++) { // loop through all the layers backward
+        for(int i = this.layers.Length - 1; i >= 0; i--) { // loop through all the layers backward
             layer curlayer = this.layers[i];
             for(int numnode = 0; numnode < curlayer.nodes.Length; numnode++) { // visit every node
                 node curnode = curlayer.nodes[numnode];

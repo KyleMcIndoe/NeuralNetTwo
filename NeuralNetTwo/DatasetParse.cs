@@ -11,8 +11,8 @@ public class data { // I hate this script with a burning passion, but it works,a
     string[][] answersLinesSplit = new string[answersLines.Length][];
     string[][] rgbsLinesSplit = new string[rgbsLines.Length][];
 
-    public int[][] answers = new int[answersLines.Length][];
-    public int[][] rgbs = new int[answersLines.Length][];
+    public double[][] answers = new double[answersLines.Length][];
+    public double[][] rgbs = new double[answersLines.Length][];
 
     public data() {
         for(int i = 0; i < answersLines.Length; i++) {
@@ -20,7 +20,7 @@ public class data { // I hate this script with a burning passion, but it works,a
             rgbsLinesSplit[i] = rgbsLines[i].Split(" ");
         }
         for(int i = 0; i < answersLinesSplit.Length; i++) {
-            answers[i] = new int[answersLinesSplit[i].Length];
+            answers[i] = new double[answersLinesSplit[i].Length];
             for(int j = 0; j < answersLinesSplit[i].Length; j++) {
                 int x = 0;
                 if(answersLinesSplit[i][j] == "1") x = 1;
@@ -29,7 +29,7 @@ public class data { // I hate this script with a burning passion, but it works,a
         }
 
         for(int i = 0; i < rgbsLinesSplit.Length; i++) {
-            rgbs[i] = new int[rgbsLinesSplit[i].Length];
+            rgbs[i] = new double[rgbsLinesSplit[i].Length];
             for(int j = 0; j < rgbsLinesSplit[i].Length; j++) {
                 int x = 0;
                 Int32.TryParse(rgbsLinesSplit[i][j], out x);
