@@ -50,7 +50,8 @@ public static class funcs {
 
             double[] networkOutput = n.calculateOutput(trainingInput); // forward propagation
             double loss = meanSquaredError(trainingInput, trainingExpected, n);
-            
+            n.errorHistory.Add(loss); // note down mse
+
             n.backPropogation(loss, learnRate); // backward propagation
         }
     }

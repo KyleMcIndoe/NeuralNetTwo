@@ -46,7 +46,7 @@ public class network {
     }
 
     public layer[] layers;
-
+    public List<double> errorHistory = new List<double>(); // list of error history for future graphing
     public network(int[] layersizes) {
         this.layers = new layer[layersizes.Length];
 
@@ -114,4 +114,5 @@ public class network {
             }
         }
     }
+    
 }
