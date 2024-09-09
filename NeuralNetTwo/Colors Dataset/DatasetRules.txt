@@ -1,0 +1,10 @@
+This dataset will have a bunch of rgb values, then 6 possible classifications.
+
+Each new line will be a training set entry
+
+Node 0 = Red
+Node 1 = Purple
+Node 2 = Blue
+Node 3 = Green
+Node 4 = Yellow
+Node 5 = Orange
