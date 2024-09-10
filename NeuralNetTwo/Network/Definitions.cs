@@ -11,7 +11,7 @@ public class network {
         public double costDeriv = 0; // derivative of cost with respect to the nodes output
         public node(int i) {
             this.val = 0;
-            this.bias = funcs.rand.Next(0, 2);
+            this.bias = 0;// funcs.rand.Next(0, 2);
             this.index = i;
         }
     }
@@ -61,7 +61,7 @@ public class network {
                 node curnode = curlayer.nodes[nodenum];
 
                 for(int j = 0; j < layersizes[layernum + 1]; j++) {
-                    curnode.weights.Add(funcs.rand.NextDouble()); // a random weight for every node in the next layer
+                    curnode.weights.Add(0.5); // a random weight for every node in the next layer
                     curnode.connections.Add(this.layers[layernum + 1].nodes[j]);
                 } 
             }
@@ -104,7 +104,6 @@ public class network {
             for(int numnode = 0; numnode < curlayer.nodes.Length; numnode++) { // visit every node
                 node curnode = curlayer.nodes[numnode];
                 curnode.costDeriv = funcs.derivOfNode(curnode);
-
                 for(int numw = 0; numw < curnode.weights.Count; numw++) { // go through every weight of said node
                     double nudgeAmount = curnode.connections[numw].costDeriv * funcs.sigmoidDerivative(curnode.val) * curnode.val;
                     curnode.weights[numw] = curnode.weights[numw] - (learnRate * nudgeAmount);

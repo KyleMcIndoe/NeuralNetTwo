@@ -43,8 +43,9 @@ public static class funcs {
         return derivofnode;
     }
 
-    public static void train(network n, double[][] trainingDataInput, double[][] trainingDataOutput, double learnRate, int epochs) {
-        for(int curSet = 0; curSet < epochs && curSet < trainingDataInput.Length; curSet++) {
+    public static void train(network n, double[][] trainingDataInput, double[][] trainingDataOutput, double learnRate, int numDataPoints, int epochs) {
+        for(int t = 0; t < epochs; t++) {
+            for(int curSet = 0; curSet < numDataPoints && curSet < trainingDataInput.Length; curSet++) {
             double[] trainingInput = trainingDataInput[curSet];
             double[] trainingExpected = trainingDataOutput[curSet];
 
@@ -53,6 +54,7 @@ public static class funcs {
             n.errorHistory.Add(loss); // note down mse
 
             n.backPropogation(loss, learnRate); // backward propagation
+            }
         }
     }
 
